@@ -1,5 +1,5 @@
 /**
- * Tests for @tinyland-inc/tinyland-ip-location
+ * Tests for @tummycrypt/tinyland-ip-location
  *
  * 120+ tests covering:
  * - Config DI (configure/getConfig/resetConfig, defaults)

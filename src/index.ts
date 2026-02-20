@@ -1,5 +1,5 @@
 /**
- * @tinyland-inc/tinyland-ip-location
+ * @tummycrypt/tinyland-ip-location
  *
  * IP geolocation, user-agent parsing, and visitor analytics.
  *
@@ -11,7 +11,7 @@
  *   getIPLocation,
  *   trackVisitor,
  *   getVisitorAnalytics,
- * } from '@tinyland-inc/tinyland-ip-location';
+ * } from '@tummycrypt/tinyland-ip-location';
  *
  * // Configure with database SQL function
  * configure({ sql: neonSql });

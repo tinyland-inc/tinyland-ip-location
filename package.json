@@ -1,5 +1,5 @@
 {
-  "name": "@tinyland-inc/tinyland-ip-location",
+  "name": "@tummycrypt/tinyland-ip-location",
   "version": "0.1.0",
   "description": "IP geolocation, user-agent parsing, and visitor analytics",
   "type": "module",
@@ -48,5 +48,9 @@
   },
   "engines": {
     "node": ">=22.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   }
 }

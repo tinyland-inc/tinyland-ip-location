@@ -1,5 +1,5 @@
 /**
- * Types for @tinyland-inc/tinyland-ip-location
+ * Types for @tummycrypt/tinyland-ip-location
  *
  * @module types
  */

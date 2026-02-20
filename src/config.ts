@@ -1,12 +1,12 @@
 /**
- * Global DI configuration for @tinyland-inc/tinyland-ip-location
+ * Global DI configuration for @tummycrypt/tinyland-ip-location
  *
  * Provides a singleton configuration store that allows injection
  * of database SQL tagged template, custom fetch, and API URL.
  *
  * Usage:
  * ```typescript
- * import { configure } from '@tinyland-inc/tinyland-ip-location';
+ * import { configure } from '@tummycrypt/tinyland-ip-location';
  *
  * configure({
  *   sql: neonSql,
