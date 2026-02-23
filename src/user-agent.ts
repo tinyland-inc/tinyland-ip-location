@@ -1,30 +1,30 @@
-/**
- * User-agent parsing utilities.
- *
- * Pure functions with zero dependencies - parses device type, browser, and OS
- * from user-agent strings.
- *
- * @module user-agent
- */
+
+
+
+
+
+
+
+
 
 import type { DeviceInfo } from './types.js';
 
-/**
- * Parse a user-agent string to extract device information.
- *
- * @param userAgent - The user-agent string from the HTTP request
- * @returns Parsed device information including type, browser, and OS
- *
- * @example
- * ```typescript
- * const info = parseUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X)');
- * // { deviceType: 'mobile', browser: 'Safari', os: 'iOS' }
- * ```
- */
+
+
+
+
+
+
+
+
+
+
+
+
 export function parseUserAgent(userAgent: string): DeviceInfo {
 	const ua = userAgent.toLowerCase();
 
-	// Detect device type
+	
 	let deviceType: 'desktop' | 'mobile' | 'tablet' = 'desktop';
 	if (/ipad|tablet|playbook|silk/i.test(ua)) {
 		deviceType = 'tablet';
@@ -34,7 +34,7 @@ export function parseUserAgent(userAgent: string): DeviceInfo {
 		deviceType = 'mobile';
 	}
 
-	// Detect browser
+	
 	let browser = 'Unknown';
 	if (ua.includes('firefox')) browser = 'Firefox';
 	else if (ua.includes('chrome')) browser = 'Chrome';
@@ -42,7 +42,7 @@ export function parseUserAgent(userAgent: string): DeviceInfo {
 	else if (ua.includes('edge')) browser = 'Edge';
 	else if (ua.includes('opera')) browser = 'Opera';
 
-	// Detect OS
+	
 	let os = 'Unknown';
 	if (ua.includes('windows')) os = 'Windows';
 	else if (ua.includes('mac')) os = 'macOS';

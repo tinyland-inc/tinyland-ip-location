@@ -1,21 +1,21 @@
-/**
- * IP geolocation lookup utilities.
- *
- * Resolves IP addresses to geographic location data using configurable
- * API endpoints. Handles localhost/private IPs gracefully.
- *
- * @module geolocation
- */
+
+
+
+
+
+
+
+
 
 import type { IPLocationData } from './types.js';
 import { getFetch, getGeoApiUrl } from './config.js';
 
-/**
- * Check if an IP address is a private/local address.
- *
- * @param ip - The IP address to check
- * @returns True if the IP is localhost or a private range
- */
+
+
+
+
+
+
 export function isPrivateIP(ip: string): boolean {
 	return (
 		ip === '127.0.0.1' ||
@@ -34,23 +34,23 @@ export function isPrivateIP(ip: string): boolean {
 	);
 }
 
-/**
- * Get geolocation data for an IP address.
- *
- * For localhost and private IP ranges, returns a "Local" placeholder.
- * For public IPs, queries the configured geo API (default: ip-api.com).
- *
- * @param ip - The IP address to look up
- * @returns Location data or an empty object on failure
- *
- * @example
- * ```typescript
- * const location = await getIPLocation('8.8.8.8');
- * // { country: 'United States', region: 'California', city: 'Mountain View', ... }
- * ```
- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export async function getIPLocation(ip: string): Promise<IPLocationData> {
-	// Skip for localhost/private IPs
+	
 	if (
 		ip === '127.0.0.1' ||
 		ip === '::1' ||

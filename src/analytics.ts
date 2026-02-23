@@ -1,34 +1,34 @@
-/**
- * Visitor analytics tracking and reporting.
- *
- * Requires a SQL tagged template function to be configured via DI.
- * Uses the `sql` tagged template for all database operations.
- *
- * @module analytics
- */
+
+
+
+
+
+
+
+
 
 import type { VisitorAnalytics } from './types.js';
 import { getSql } from './config.js';
 import { parseUserAgent } from './user-agent.js';
 import { getIPLocation } from './geolocation.js';
 
-/**
- * Track a visitor by inserting analytics data into the database.
- *
- * Automatically enriches the record with device info (from user-agent parsing)
- * and geolocation data (from IP lookup).
- *
- * @param ip - Visitor IP address
- * @param path - URL path visited
- * @param referrer - HTTP referrer (null if direct)
- * @param userAgent - User-agent string (null if unavailable)
- * @throws {Error} If SQL is not configured
- *
- * @example
- * ```typescript
- * await trackVisitor('8.8.8.8', '/about', 'https://google.com', 'Mozilla/5.0 ...');
- * ```
- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export async function trackVisitor(
 	ip: string,
 	path: string,
@@ -73,7 +73,7 @@ export async function trackVisitor(
 			)
 		`;
 	} catch (error) {
-		// Re-throw SQL not configured errors
+		
 		if (
 			error instanceof Error &&
 			error.message.includes('SQL not configured')
@@ -84,22 +84,22 @@ export async function trackVisitor(
 	}
 }
 
-/**
- * Get aggregated visitor analytics for a given timeframe.
- *
- * Returns total/unique visitors, page views, device types, referrers,
- * recent visitors, and location statistics.
- *
- * @param timeframe - Time window: '24h', '7d', or '30d' (default: '24h')
- * @returns Aggregated analytics data
- * @throws {Error} If SQL is not configured
- *
- * @example
- * ```typescript
- * const stats = await getVisitorAnalytics('7d');
- * console.log(`${stats.uniqueVisitors} unique visitors in the last 7 days`);
- * ```
- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export async function getVisitorAnalytics(
 	timeframe: '24h' | '7d' | '30d' = '24h'
 ): Promise<VisitorAnalytics> {
@@ -111,7 +111,7 @@ export async function getVisitorAnalytics(
 		'30d': '30 days',
 	}[timeframe];
 
-	// Get total and unique visitors
+	
 	const visitorStats = await sql`
 		SELECT
 			COUNT(*) as total_visitors,
@@ -120,7 +120,7 @@ export async function getVisitorAnalytics(
 		WHERE visited_at > NOW() - INTERVAL ${interval}
 	`;
 
-	// Get page views
+	
 	const pageViews = await sql`
 		SELECT
 			path,
@@ -132,7 +132,7 @@ export async function getVisitorAnalytics(
 		LIMIT 10
 	`;
 
-	// Get device types
+	
 	const deviceTypes = await sql`
 		SELECT
 			device_type as type,
@@ -144,7 +144,7 @@ export async function getVisitorAnalytics(
 		ORDER BY count DESC
 	`;
 
-	// Get top referrers
+	
 	const topReferrers = await sql`
 		SELECT
 			COALESCE(referrer, 'Direct') as referrer,
@@ -156,7 +156,7 @@ export async function getVisitorAnalytics(
 		LIMIT 10
 	`;
 
-	// Get recent visitors with location
+	
 	const recentVisitors = await sql`
 		SELECT
 			ip_address as ip,
@@ -171,7 +171,7 @@ export async function getVisitorAnalytics(
 		LIMIT 20
 	`;
 
-	// Get location stats
+	
 	const locationStats = await sql`
 		SELECT
 			country,

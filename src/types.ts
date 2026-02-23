@@ -1,10 +1,10 @@
-/**
- * Types for @tummycrypt/tinyland-ip-location
- *
- * @module types
- */
 
-/** IP geolocation data returned from lookup services */
+
+
+
+
+
+
 export interface IPLocationData {
 	country?: string;
 	region?: string;
@@ -14,14 +14,14 @@ export interface IPLocationData {
 	timezone?: string;
 }
 
-/** Parsed device information from user-agent strings */
+
 export interface DeviceInfo {
 	deviceType: 'desktop' | 'mobile' | 'tablet';
 	browser: string;
 	os: string;
 }
 
-/** Aggregated visitor analytics data */
+
 export interface VisitorAnalytics {
 	totalVisitors: number;
 	uniqueVisitors: number;
@@ -39,21 +39,21 @@ export interface VisitorAnalytics {
 	locationStats: Array<{ country: string; count: number }>;
 }
 
-/**
- * Tagged template SQL function type.
- * Matches the postgres/neon sql`` tagged template pattern.
- */
+
+
+
+
 export type SqlTaggedTemplate = (
 	strings: TemplateStringsArray,
 	...values: unknown[]
 ) => Promise<Record<string, unknown>[]>;
 
-/** Dependency injection configuration for ip-location package */
+
 export interface IpLocationConfig {
-	/** Tagged template SQL function for database queries */
+	
 	sql?: SqlTaggedTemplate;
-	/** IP geolocation API URL template (default: ip-api.com) */
+	
 	geoApiUrl?: string;
-	/** Custom fetch function (for testing) */
+	
 	fetchFn?: typeof fetch;
 }
