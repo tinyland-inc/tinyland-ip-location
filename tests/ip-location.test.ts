@@ -1,14 +1,14 @@
-/**
- * Tests for @tummycrypt/tinyland-ip-location
- *
- * 120+ tests covering:
- * - Config DI (configure/getConfig/resetConfig, defaults)
- * - parseUserAgent (desktop/mobile/tablet, browsers, OS, edge cases)
- * - getIPLocation (successful lookup, private IPs, fetch failures, custom config)
- * - trackVisitor (inserts, null fields, SQL not configured, enrichment)
- * - getVisitorAnalytics (timeframes, stat categories, SQL not configured, empty)
- * - Edge cases (non-success API, malformed JSON, timeouts, unicode)
- */
+
+
+
+
+
+
+
+
+
+
+
 
 import { describe, it, expect, beforeEach, vi, type Mock } from 'vitest';
 import {
@@ -29,9 +29,9 @@ import type {
 	SqlTaggedTemplate,
 } from '../src/index.js';
 
-// ============================================================================
-// Helpers
-// ============================================================================
+
+
+
 
 function createMockFetch(data: unknown, ok = true): Mock {
 	return vi.fn().mockResolvedValue({
@@ -62,9 +62,9 @@ function createSuccessGeoResponse(overrides: Partial<Record<string, unknown>> = 
 	};
 }
 
-// ============================================================================
-// Config DI Tests
-// ============================================================================
+
+
+
 
 describe('Config DI', () => {
 	beforeEach(() => {
@@ -146,9 +146,9 @@ describe('Config DI', () => {
 	});
 });
 
-// ============================================================================
-// parseUserAgent Tests
-// ============================================================================
+
+
+
 
 describe('parseUserAgent', () => {
 	describe('device type detection', () => {
@@ -240,9 +240,9 @@ describe('parseUserAgent', () => {
 		it('should detect Edge', () => {
 			const ua =
 				'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edge/120.0.0.0';
-			// Note: Edge UA also contains "chrome" and "safari", but the original code checks
-			// Chrome first, so Edge UAs containing "chrome" will match Chrome. This matches
-			// the original implementation behavior.
+			
+			
+			
 			expect(parseUserAgent(ua).browser).toBe('Chrome');
 		});
 
@@ -287,7 +287,7 @@ describe('parseUserAgent', () => {
 		it('should detect Android', () => {
 			const ua =
 				'Mozilla/5.0 (Linux; Android 13; Pixel 7) Chrome/120.0 Mobile Safari/537.36';
-			// Note: UA contains both "linux" and "android", Linux matches first in original code
+			
 			expect(parseUserAgent(ua).os).toBe('Linux');
 		});
 
@@ -297,16 +297,16 @@ describe('parseUserAgent', () => {
 		});
 
 		it('should detect macOS for iPhone UA (contains "Mac OS X")', () => {
-			// Note: iPhone UAs contain "Mac OS X", so `includes('mac')` matches first.
-			// This matches the original ipLocation.ts behavior.
+			
+			
 			const ua =
 				'Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) Safari/605.1.15';
 			expect(parseUserAgent(ua).os).toBe('macOS');
 		});
 
 		it('should detect macOS for iPad UA (contains "Mac OS X")', () => {
-			// Note: iPad UAs contain "Mac OS X", so `includes('mac')` matches first.
-			// This matches the original ipLocation.ts behavior.
+			
+			
 			const ua = 'Mozilla/5.0 (iPad; CPU OS 16_0 like Mac OS X) Safari/605.1.15';
 			expect(parseUserAgent(ua).os).toBe('macOS');
 		});
@@ -364,9 +364,9 @@ describe('parseUserAgent', () => {
 	});
 });
 
-// ============================================================================
-// getIPLocation Tests
-// ============================================================================
+
+
+
 
 describe('getIPLocation', () => {
 	beforeEach(() => {
@@ -543,9 +543,9 @@ describe('getIPLocation', () => {
 	});
 });
 
-// ============================================================================
-// isPrivateIP Tests
-// ============================================================================
+
+
+
 
 describe('isPrivateIP', () => {
 	it('should identify 127.0.0.1 as private', () => {
@@ -586,9 +586,9 @@ describe('isPrivateIP', () => {
 	});
 });
 
-// ============================================================================
-// trackVisitor Tests
-// ============================================================================
+
+
+
 
 describe('trackVisitor', () => {
 	let mockSql: Mock;
@@ -637,7 +637,7 @@ describe('trackVisitor', () => {
 			'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36';
 		await trackVisitor('8.8.8.8', '/test', null, ua);
 		expect(mockSql).toHaveBeenCalledOnce();
-		// Verify sql was called (the template interpolation includes device info)
+		
 		const callArgs = mockSql.mock.calls[0];
 		expect(callArgs).toBeDefined();
 	});
@@ -662,7 +662,7 @@ describe('trackVisitor', () => {
 
 	it('should handle sql insert failure gracefully', async () => {
 		mockSql.mockRejectedValueOnce(new Error('DB connection lost'));
-		// Should not throw (error is caught and logged)
+		
 		await expect(
 			trackVisitor('8.8.8.8', '/test', null, 'Mozilla/5.0 Chrome/120.0')
 		).resolves.toBeUndefined();
@@ -674,7 +674,7 @@ describe('trackVisitor', () => {
 			sql: mockSql as unknown as SqlTaggedTemplate,
 			fetchFn: failingFetch as unknown as typeof fetch,
 		});
-		// Should still insert with empty location
+		
 		await trackVisitor('8.8.8.8', '/test', null, 'Mozilla/5.0 Chrome/120.0');
 		expect(mockSql).toHaveBeenCalledOnce();
 	});
@@ -682,10 +682,10 @@ describe('trackVisitor', () => {
 	it('should pass ip as first sql parameter', async () => {
 		await trackVisitor('1.2.3.4', '/page', null, null);
 		const callArgs = mockSql.mock.calls[0];
-		// The tagged template call has strings array as first arg, then interpolated values
-		// callArgs[0] is TemplateStringsArray, rest are values
-		// For a tagged template: sql`... ${ip}::inet ...`, the values start at callArgs index 1+
-		// but with our mock, we just verify it was called
+		
+		
+		
+		
 		expect(callArgs).toBeDefined();
 	});
 
@@ -750,32 +750,32 @@ describe('trackVisitor', () => {
 	});
 });
 
-// ============================================================================
-// getVisitorAnalytics Tests
-// ============================================================================
+
+
+
 
 describe('getVisitorAnalytics', () => {
 	let mockSql: Mock;
 
 	const defaultResponses: Record<string, unknown>[][] = [
-		// visitorStats
+		
 		[{ total_visitors: '150', unique_visitors: '42' }],
-		// pageViews
+		
 		[
 			{ path: '/home', count: 50 },
 			{ path: '/about', count: 30 },
 		],
-		// deviceTypes
+		
 		[
 			{ type: 'desktop', count: 80 },
 			{ type: 'mobile', count: 60 },
 		],
-		// topReferrers
+		
 		[
 			{ referrer: 'https://google.com', count: 40 },
 			{ referrer: 'Direct', count: 30 },
 		],
-		// recentVisitors
+		
 		[
 			{
 				ip: '8.8.8.8',
@@ -786,7 +786,7 @@ describe('getVisitorAnalytics', () => {
 				visited_at: '2025-01-01T00:00:00Z',
 			},
 		],
-		// locationStats
+		
 		[
 			{ country: 'United States', count: 100 },
 			{ country: 'Germany', count: 20 },
@@ -817,7 +817,7 @@ describe('getVisitorAnalytics', () => {
 
 	it('should default to 24h timeframe', async () => {
 		await getVisitorAnalytics();
-		// sql is called 6 times (6 queries)
+		
 		expect(mockSql).toHaveBeenCalledTimes(6);
 	});
 
@@ -931,9 +931,9 @@ describe('getVisitorAnalytics', () => {
 	});
 });
 
-// ============================================================================
-// Edge Cases & Integration
-// ============================================================================
+
+
+
 
 describe('Edge cases', () => {
 	beforeEach(() => {
@@ -1077,7 +1077,7 @@ describe('Edge cases', () => {
 			expect(results[0].country).toBe('United States');
 			expect(results[1].country).toBe('United States');
 			expect(results[2].country).toBe('Local');
-			// Only 2 fetch calls (127.0.0.1 is private)
+			
 			expect(mockFetch).toHaveBeenCalledTimes(2);
 		});
 
