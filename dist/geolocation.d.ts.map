@@ -1,0 +1,1 @@
+{"version":3,"file":"geolocation.d.ts","sourceRoot":"","sources":["../src/geolocation.ts"],"names":[],"mappings":"AASA,OAAO,KAAK,EAAE,cAAc,EAAE,MAAM,YAAY,CAAC;AASjD,wBAAgB,WAAW,CAAC,EAAE,EAAE,MAAM,GAAG,OAAO,CAgB/C;AAiBD,wBAAsB,aAAa,CAAC,EAAE,EAAE,MAAM,GAAG,OAAO,CAAC,cAAc,CAAC,CAyCvE"}
